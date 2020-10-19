@@ -1,31 +1,37 @@
 /*
- * @fileName: qrcode 的webpack生产环境的配置信息
- * @Date: 2020-10-12 11:16:32
- * @Author: manyao.zhu
+ * @file: webpack的正式环境配置
+ * @Date: 2020-09-07 14:30:16
+ * @author: manyao.zhu
  */
-const merge = require('webpack-merge');
-const commonWebpack = require('./webpack.base.conf');
-const path = require('path');
-
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const _ = require('lodash');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin');
+// const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const path = require('path');
+const webpackConfig = require('./webpack.base.conf');
 
-module.exports = merge(commonWebpack, {
-  mode: 'production',
-  devtool: false,
-  plugins: [
-    new CleanWebpackPlugin(['dist']),
-    new HtmlWebpackPlugin({
-      title: 'qrcode 案例',
-      template: './index.html'
-    }),
-    new UglifyjsWebpackPlugin()
-  ],
-  output: {
-    path: path.resolve(__dirname, '../dist'),
-    filename: 'qrcode.min.js',
-    publicPath: '/'
-  }
-})
+const webpackConf = webpackConfig.map(config => {
+    const isSDK = config.output.library != null;
+    const filename = config.output.filename.replace(/\.js$/, isSDK ? '.min.js' : '[chunkhash:8].js');
+    const plugins = [
+        new webpack.DefinePlugin({ 'process.env': { NODE_ENV: '"production"' } }),
+        new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false }, sourceMap: false }),
+        new HtmlWebpackPlugin({
+            template: './qrcode/index.html',
+            filename: 'qrcode.html',
+            inject: 'head'
+        })
+    ];
 
+    return _.merge({}, config, {
+        output: {
+            path: path.resolve(__dirname, '../dist'),
+            filename,
+            publicPath: '/'
+        },
+        devtool: false,
+        plugins
+    });
+});
+
+module.exports = webpackConf;

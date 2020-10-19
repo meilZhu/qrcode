@@ -6,9 +6,9 @@
 let qrcode;
 
 export function getQrCode() {
-  return qrcode || null;
+    return qrcode || null;
 }
 
 export function setQrCode(code) {
-  qrcode = code;
+    qrcode = code;
 }
