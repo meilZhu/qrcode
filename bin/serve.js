@@ -12,9 +12,9 @@ const proxyMiddleware = require('http-proxy-middleware');
 
 const webpackconfig = require('../webpack/webpack.dev.conf');
 // default host where dev server listens ip address
-const host = args.host || 'localhost';
+const host = args.host || '0.0.0.0';
 // default port where devserver listens for incoming traffic
-const port = args.port || 8081;
+const port = args.port || 8484;
 const proxy = {
     intergration: {
         filter: '/ftt/api/v1/',
@@ -59,10 +59,10 @@ app.use(devMiddleware);
 // compilation error display
 app.use(hotMiddleware);
 
-app.use(staticPath, express.static('./images'));
-app.use(staticPath, express.static('./scripts'));
-app.use(staticPath, express.static('./fonts'));
-app.use(staticPath, express.static('./styles'));
+// app.use(staticPath, express.static('./images'));
+// app.use(staticPath, express.static('./scripts'));
+// app.use(staticPath, express.static('./fonts'));
+// app.use(staticPath, express.static('./styles'));
 
 console.log('> Starting dev server...');
 devMiddleware.waitUntilValid(() => {

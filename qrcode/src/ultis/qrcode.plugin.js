@@ -7,8 +7,6 @@
 // export const QRCode = QRCodeLogo;
 const EasyQRCode = require('easyqrcodejs');
 
-console.log(EasyQRCode);
-
 const QRCode = EasyQRCode;
 
 module.exports = QRCode;

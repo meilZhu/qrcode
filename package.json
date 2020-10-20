@@ -2,12 +2,19 @@
   "name": "@styleofpicasso/qrcode",
   "version": "0.0.1",
   "description": "二维码的生成，二维码的解析",
-  "main": "qrcode/index.js",
+  "main": "dist/qrcode/qrcode.min.js",
   "files": [
     "README.md",
     "dist"
   ],
-  "keywords": [],
+  "keywords": [
+    "qrcode",
+    "qrcodeDecode",
+    "decoder",
+    "二维码生成器",
+    "二维码logo",
+    "二维码解析器"
+  ],
   "scripts": {
     "clean:test": "rimraf coverage",
     "clean": "npm run clean:test",
@@ -57,7 +64,7 @@
     "moment": "^2.24.0",
     "opn": "^5.5.0",
     "promise-polyfill": "^6.0.2",
-    "qrcodedecode": "^1.0.1",
+    "qrcode-decoder": "^0.1.2",
     "webpack": "^2.6.1",
     "webpack-dev-middleware": "^1.12.0",
     "webpack-hot-middleware": "^2.25.0",

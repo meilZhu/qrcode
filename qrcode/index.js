@@ -4,11 +4,12 @@
  * @Author: manyao.zhu
  */
 
-import { getQrCode, setQrCode } from './src/ultis/qrcode';
-// import { getFileUrl, utf82str } from './src/ultis/ulti.js';
-
-import { qrcodeOptions } from './src/config/baseConfig';
+import QRDecode from './src/ultis/qrcode.analysis';
 import QRCode from './src/ultis/qrcode.plugin';
+
+import { getQrCode, setQrCode } from './src/ultis/qrcode';
+import { getFileUrl } from './src/ultis/ulti';
+import { qrcodeOptions } from './src/config/baseConfig';
 
 const BaseOptions = Object.assign({}, qrcodeOptions);
 
@@ -26,7 +27,6 @@ export function initCode(id, options) {
     }
 
     const reqrcode = new QRCode(id, opt);
-    console.log(reqrcode.makeCode);
     setQrCode(reqrcode);
 }
 
@@ -62,12 +62,11 @@ export function resizeCode(width, height) {
  * @param {*} file 需要解析的二维码文件
  * @param {*} callback 解析二维码结果的回调函数
  */
-// export function deCode(file, callback) {
-//     const url = getFileUrl(file);
-//     qrcode.decode(url);
-//     qrcode.callback = function (imageMsg) {
-//         callback(utf82str(imageMsg));
-//     };
-// }
+export function deCode(file, callback) {
+    const url = getFileUrl(file);
+    QRDecode.decodeFromImage(url).then(res => {
+        callback(res.data);
+    });
+}
 
-export const correctLevel = QRCode.CorrectLevel;
+export const CorrectLevel = QRCode.CorrectLevel;

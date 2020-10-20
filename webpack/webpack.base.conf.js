@@ -19,7 +19,7 @@ const webpackConfig = [{
     },
     devtool: '#source-map',
     module: {
-        rules: _.flatten([loader.eslint, loader.babel])
+        rules: _.flatten([loader.eslint, loader.babel, loader.images])
     },
     stats: {
         colors: true,

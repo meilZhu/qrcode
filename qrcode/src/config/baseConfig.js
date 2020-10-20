@@ -18,9 +18,9 @@ export const qrcodeOptions = {
 
 // 二维码上logo的配置
 export const logoOptions = {
-    logo: '../../../static/images/icon.png',
-    logoWidth: 60,
-    logoHeight: 60,
+    logo: undefined,
+    logoWidth: 45,
+    logoHeight: 45,
     logoBackgroundColor: '#fff',
     logoBackgroundTransparent: false
 };

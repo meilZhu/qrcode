@@ -16,7 +16,7 @@
 
 <body>
   <div>
-    <input type="file" id='file' value='选择文件'>
+    <input type="file" id='file' value='选择需要解析的二维码'>
 
     <li class="code-result"></li>
 
@@ -24,7 +24,9 @@
 
     <input type="text" value='' id='text'>
 
-    <button class="make-code">生成二维码</button>
+    <button class="make-code">生成二维码</button> <br/>
+    <button class="clear">清除二维码</button> <br/>
+    <button class="init">再次初始化</button>
   </div>
 
   <script>
@@ -35,8 +37,9 @@
               width: 140,
               height: 140,
               colorDark: 'rgba(0,0,0,.7)',
-              colorLight: '#fff'
+              colorLight: '#fff',
               // correctLevel: QRCode.correctLevel.H
+              // logo: './images/icon.png'
           });
       }
 
@@ -53,12 +56,20 @@
       // 解析二维码
       $('#file').change(function () {
           const file = $(this)[0].files[0]
-          console.log($(this))
-          console.log('选择的文件', file);
-          // QrCode.deCode(file, (mag) => {
-          //   console.log(msg);
-          //   $('.code-result').html(msg)
-          // })
+          // console.log($(this))
+          // console.log('选择的文件', file);
+          QRCode.deCode(file, (msg) => {
+            console.log(msg);
+            $('.code-result').html(msg);
+          })
+      })
+
+      $('.clear').click(function () {
+        QRCode.clearCode();
+      })
+
+      $('.init').click(function () {
+        initQrCode();
       })
   </script>
 </body>
