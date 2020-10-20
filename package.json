@@ -1,6 +1,6 @@
 {
   "name": "@styleofpicasso/qrcode",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "二维码的生成，二维码的解析",
   "main": "dist/qrcode/qrcode.min.js",
   "files": [
