@@ -11,7 +11,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
   <title>Document</title>
-  <script src='./index.js'></script>
 </head>
 
 <body>
@@ -32,14 +31,8 @@
   <script>
       // 初始化生成二维码
       function initQrCode() {
-          QRCode.initCode('qrcode', {
+          QRCodeSdk.initCode('qrcode', {
               text: '张三李四王五',
-              width: 140,
-              height: 140,
-              colorDark: 'rgba(0,0,0,.7)',
-              colorLight: '#fff',
-              // correctLevel: QRCode.correctLevel.H
-              // logo: './images/icon.png'
           });
       }
 
@@ -48,24 +41,21 @@
       // 再次手动生成二维码
       $('.make-code').click(function () {
           const text = $('#text').val();
-          console.log(text);
-          QRCode.makeCode(text);
+          QRCodeSdk.makeCode(text);
       })
 
 
       // 解析二维码
       $('#file').change(function () {
           const file = $(this)[0].files[0]
-          // console.log($(this))
-          // console.log('选择的文件', file);
-          QRCode.deCode(file, (msg) => {
+          QRCodeSdk.deCode(file, (msg) => {
             console.log(msg);
             $('.code-result').html(msg);
           })
       })
 
       $('.clear').click(function () {
-        QRCode.clearCode();
+        QRCodeSdk.clearCode();
       })
 
       $('.init').click(function () {

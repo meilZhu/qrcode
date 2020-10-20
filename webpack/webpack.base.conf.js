@@ -14,12 +14,12 @@ const webpackConfig = [{
     output: {
         path: path.resolve(__dirname, '../dist'),
         filename: 'qrcode/qrocde.js',
-        library: 'QRCode',
+        library: 'QRCodeSdk',
         libraryTarget: 'umd'
     },
     devtool: '#source-map',
     module: {
-        rules: _.flatten([loader.eslint, loader.babel, loader.images])
+        rules: _.flatten([loader.eslint, loader.babel])
     },
     stats: {
         colors: true,

@@ -41,7 +41,7 @@ import * as QRCode from '@styleofpicasso/qrcode';
 #### 初始化生成二维码
 
 ```
-WebSocketSdk.initCode(id, config);
+QRcode.initCode(id, config);
 ```
 
 ##### id
@@ -144,6 +144,169 @@ QRCode.resizeCode(width, height)
  * callback  解析成功之后的回调函数， 参数： 解析的内容 当解析失败时，返回undefine， 成功返回解析数据
  */
 QRCode.deCode(file, callback);
+```
+
+## 在项目中的具体使用
+
+##### For original js
+
+```
+// html
+<div>
+    <input type="file" id='file' value='选择需要解析的二维码'>
+
+    <li class="code-result"></li>
+
+    <div id="qrcode"></div>
+
+    <input type="text" value='' id='text'>
+
+    <button class="make-code">生成二维码</button> <br/>
+    <button class="clear">清除二维码</button> <br/>
+    <button class="init">再次初始化</button>
+</div>
+// js
+
+// 初始化生成二维码
+function initQrCode() {
+    QRCodeSdk.initCode('qrcode', {
+        text: '张三李四王五',
+    });
+}
+
+initQrCode();
+
+// 再次手动生成二维码
+$('.make-code').click(function () {
+    const text = $('#text').val();
+    QRCodeSdk.makeCode(text);
+})
+
+
+// 解析二维码
+$('#file').change(function () {
+    const file = $(this)[0].files[0]
+    QRCodeSdk.deCode(file, (msg) => {
+      console.log(msg);
+      $('.code-result').html(msg);
+    })
+})
+
+$('.clear').click(function () {
+  QRCodeSdk.clearCode();
+})
+
+$('.init').click(function () {
+  initQrCode();
+})
+```
+
+##### For angularjs
+
+```
+// html
+<div #qrcode></div>
+
+// ts
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+
+import * as QRCodeSdk from "@styleofpicasso/qrcode";
+
+export class HomeComponent implements AfterViewInit {
+  @ViewChild('qrcode', {static: false}) qrcode: ElementRef;
+  constructor(private router: Router) { }
+
+  ngAfterViewInit() {
+    QRCodeSdk.initCode(this.qrcode.nativeElement, {text: '朱满要真水'});
+  }
+}
+```
+
+##### For vue.js
+
+```
+// html
+<div ref="qrcode></div>
+
+// js
+import * as QRCodeSdk from "@styleofpicasso/qrcode";
+
+export default {
+  name: 'text',
+  data() {
+    return {
+      options: {
+        text: "https://github.com/ushelp/EasyQRCodeJS"
+      }
+    }
+  }
+  mounted(){
+    QRCodeSdk.initCode(this.$refs.qrcode, options);
+  },
+  methods:{
+      btnClick(){
+
+      }
+  }
+}
+```
+
+###### For react.js
+
+```
+// js
+import React from 'react';
+import * as QRCodeSdk from "@styleofpicasso/qrcode";
+
+class TestComponent extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.qrcode = React.createRef();
+    }
+
+    componentDidMount() {
+        // Options
+        var options = {
+            text: "https://github.com/ushelp/EasyQRCodeJS"
+        }
+        // Create new QRCode Object
+        QRCodeSdk.initCode( this.qrcode.current, options);
+    }
+    render() {
+        return (
+        <div className = "test">
+            <div ref={this.qrcode}></div>
+        </div>
+        );
+    }
+}
+
+export default TestComponent
+
+// ts
+import React, { useEffect } from "react";
+import * as QRCodeSdk from "@styleofpicasso/qrcode";
+
+function TestComponent() {
+  const code = React.createRef<HTMLDivElement>();
+
+  useEffect(() => {
+    QRCodeSdk(code.current, { text: "https://github.com/ushelp/EasyQRCodeJS" });
+  }, [code]);
+
+  return (
+    <div className="App">
+      <header className="App-header">
+
+        <div ref={code}></div>
+      </header>
+    </div>
+  );
+}
+
+export default TestComponent;
+
 ```
 
 ## CHANGE LOG
